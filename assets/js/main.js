@@ -20,40 +20,6 @@ function linkAction(){
     navMenu.classList.remove('show')
 }
 navLink.forEach(n => n.addEventListener('click', linkAction))
-    // Resources 
-const resources = [
-    {
-        title: "Syllabus.pdf",
-        img: "/assets/img/syllabus.png",
-        pdfPath: "/assets/pdfs/MBA Syllabus R25.pdf"
-    },
-    {
-        title: "SDA Lab.pdf",
-        img: "/assets/img/SDA Lab.png",
-        pdfPath: "/assets/pdfs/SDA Lab Record.pdf"
-    }
-    // To add more, just comma-separate a new { } block here!
-];
-
-// 2. Select the grid container
-const pdfGrid = document.getElementById('pdf-list');
-
-// 3. Generate and inject the HTML
-pdfGrid.innerHTML = resources.map(resource => `
-    <div class="pdf-card">
-        <div class="pdf-preview">
-            <img src="${resource.img}" alt="${resource.title} Preview">
-            <div class="overlay">View PDF</div>
-        </div>
-        <div class="pdf-info">
-            <h3>${resource.title}</h3>
-            <a href="${resource.pdfPath}" download class="download-link">
-                Download
-            </a>
-        </div>
-    </div>
-`).join('');
-
 
 /*==================== SCROLL SECTIONS ACTIVE LINK ====================*/
 const sections = document.querySelectorAll('section[id]')
@@ -89,3 +55,47 @@ sr.reveal('.home__data, .about__img, .skills__subtitle, .skills__text',{});
 sr.reveal('.home__img, .about__subtitle, .about__text, .skills__img',{delay: 400}); 
 sr.reveal('.home__social-icon',{ interval: 200}); 
 sr.reveal('.skills__data, .work__img, .contact__input',{interval: 200}); 
+
+// 1. Resources Data
+
+const resources = [
+    {
+        title: "Syllabus",
+        img: "./assets/img/syllabus.png",
+        pdfPath: "./assets/pdfs/MBA Syllabus R25.pdf"
+    },
+    {
+        title: "SDA Lab",
+        img: "./assets/img/SDA Lab.png",
+        pdfPath: "./assets/pdfs/SDA Lab Record.pdf"
+    }
+];
+
+// 2. Wrap everything in an event listener to ensure HTML is loaded first
+document.addEventListener('DOMContentLoaded', () => {
+    const pdfGrid = document.getElementById('pdf-list');
+
+    if (!pdfGrid) {
+        console.error("Could not find element with ID 'pdf-list'");
+        return;
+    }
+
+    // 3. Generate HTML with functional links for both "View" and "Download"
+    pdfGrid.innerHTML = resources.map(resource => `
+        <div class="pdf-card">
+            <div class="pdf-preview">
+                <img src="${resource.img}" alt="${resource.title}" onerror="this.src='https://via.placeholder.com/150?text=No+Image'">
+                <a href="${resource.pdfPath}" target="_blank" class="overlay">
+                    View PDF
+                </a>
+            </div>
+            <div class="pdf-info">
+                <h3>${resource.title}</h3>
+                <a href="${resource.pdfPath}" download="${resource.title}" class="download-link">
+                    Download
+                </a>
+            </div>
+        </div>
+    `).join('');
+    sr.reveal('.pdf-card', { interval: 200 });
+});
