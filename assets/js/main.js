@@ -68,6 +68,11 @@ const resources = [
         title: "SDA Lab",
         img: "./assets/img/SDA Lab.png",
         pdfPath: "./assets/pdfs/SDA Lab Record.pdf"
+    },
+    {
+        title: "Business Economics",
+        img: "./assets/img/Economics.jpg",
+        pdfPath: "./assets/pdfs/Business Economics Material.pdf"
     }
 ];
 
@@ -99,3 +104,4 @@ document.addEventListener('DOMContentLoaded', () => {
     `).join('');
     sr.reveal('.pdf-card', { interval: 200 });
 });
+
